@@ -126,7 +126,30 @@ def hangman(secret_word, with_help):
     print(f'Welcome to Hangman!\nYour secret word is {len(secret_word)} letters long.')
     while guesses!=0 and warning!=0:
         word_progress=get_word_progress(secret_word,letters_guessed)
-
+        if '*' not in word_progress:
+            print('Congratulations, You have won!!')
+            total_score = (guesses+4*count) + (3*len(secret_word))
+            print(f'Your score is {total_score}.')
+            break
+        print(f'You have {guesses} guesses left.')
+        print('Available letters: ',get_available_letters(letters_guessed))
+        guessed_letter=input('Enter your guess: ')
+        if (guessed_letter not in alphabets):
+            print('WARNING, INVALID CHARACTER!')
+            guesses-=1
+            warning-=1
+            if warning>1:
+                print(f'You have {warning} more warnings left.')
+            else:
+                print(f'You have {warning} left.')
+            print('_ _ _ _ _ _ _ _ _ _')
+            continue
+        if guessed_letter=='!' and help_count>0:
+          print('WARNING, YOU CAN USE HELP ONLY ONCE!')
+          guesses-=1
+          warning-=1
+          if warning>1:
+              print(f'You have {warning} more warnings left.')
 if __name__ == "__main__":
 
     secret_word = choose_word(wordlist)
