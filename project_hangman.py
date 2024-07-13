@@ -68,6 +68,12 @@ def get_available_letters(letters_guessed):
       letters have not yet been guessed. The letters should be returned in
       alphabetical order
     """
+    alphabets=string.ascii_lowercase
+    fin_res=''
+    for char in alphabets:
+        if char not in letters_guessed:
+            fin_res=fin_res+char
+    return fin_res
 
 def hangman(secret_word, with_help):
     """
@@ -108,6 +114,18 @@ def hangman(secret_word, with_help):
 
     Follows the other limitations detailed in the problem write-up.
     """
+    help_count=0
+    guesses=10
+    warning=3
+    letters_guessed=[]
+    alphabets=string.ascii_lowercase+'!'
+    count=0
+    for char in alphabets:
+        if char in secret_word:
+            count+=1
+    print(f'Welcome to Hangman!\nYour secret word is {len(secret_word)} letters long.')
+    while guesses!=0 and warning!=0:
+        word_progress=get_word_progress(secret_word,letters_guessed)
 
 if __name__ == "__main__":
 
