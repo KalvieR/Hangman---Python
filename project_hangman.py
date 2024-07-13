@@ -150,6 +150,50 @@ def hangman(secret_word, with_help):
           warning-=1
           if warning>1:
               print(f'You have {warning} more warnings left.')
+          else:
+              print(f'You have {warning} left.')
+          print('_ _ _ _ _ _ _ _ _ _')
+          continue
+        if guessed_letter not in letters_guessed:
+            letters_guessed.append(guessed_letter)
+        else:
+            print('WARNING, YOU HAVE ALREADY GUESSED THIS LETTER!')
+            guesses-=1
+            warning-=1
+            if warning>1:
+                print(f'You have {warning} more warnings left.')
+            else:
+                print(f'You have {warning} left.')
+            print('_ _ _ _ _ _ _ _ _ _')
+            continue
+        word_progress=get_word_progress(secret_word,letters_guessed)
+        if guessed_letter=='!' and help_count==0:
+            i=0
+            while i<len(secret_word):
+                if word_progress[i]=='*':
+                    guessed_letter=secret_word[i]
+                    letters_guessed.append(guessed_letter)
+                    word_progress=get_word_progress(secret_word,letters_guessed)
+                    print(f'Using Hint: {word_progress}')
+                    print('_ _ _ _ _ _ _ _ _ _')
+                    help_count+=1  
+                    break
+                else:
+                    i+=1
+                continue
+            if '*' not in word_progress:
+                continue 
+            continue
+        if guessed_letter not in secret_word:
+            guesses-=1
+        if guessed_letter in secret_word:
+          print(f'Good guess: {word_progress}')
+        else:
+            print(f'Oops! That letter is not in my word: {word_progress}')
+        print('_ _ _ _ _ _ _ _ _ _')
+    if guesses==0:
+        print(f'Better Luck Next Time!\nThe word was {secret_word}.')
+
 if __name__ == "__main__":
 
     secret_word = choose_word(wordlist)
